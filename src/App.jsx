@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+ import { useState, useEffect } from "react";
+ import TaskForm from "./components/TaskForm";
+ import TaskList from "./components/TaskList";
 
-function App() {
-  const [count, setCount] = useState(0)
+ function App() {
+   const [tasks, setTasks] = useState([]);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+   // Load from localStorage
+   useEffect(() => {
+     const saved = JSON.parse(localStorage.getItem("tasks"));
+     if (saved) setTasks(saved);
+   }, []);
 
-export default App
+   // Save to localStorage
+   useEffect(() => {
+     localStorage.setItem("tasks", JSON.stringify(tasks));
+   }, [tasks]);
+
+   const addTask = (text) => {
+     setTasks([...tasks, { id: Date.now(), text, completed: false }]);
+   };
+
+   const deleteTask = (id) => {
+     setTasks(tasks.filter((t) => t.id !== id));
+   };
+
+   const toggleTask = (id) => {
+     setTasks(
+       tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+     );
+   };
+
+   return (
+     <div className="container">
+       <h1>📝 Task Manager</h1>
+       <TaskForm addTask={addTask} />
+       <TaskList
+         tasks={tasks}
+         deleteTask={deleteTask}
+         toggleTask={toggleTask}
+       />
+     </div>
+   );
+ }
+
+ export default App;
