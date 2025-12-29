@@ -1,10 +1,18 @@
 export default function Stats({ tasks }) {
+
+    const avgProgress =
+      tasks.length === 0
+        ? 0
+        : Math.round(
+            tasks.reduce((sum, t) => sum + t.progress, 0) / tasks.length
+          );
+
   return (
     <div className="row g-3 mb-4">
       <Stat title="Total Tasks" value={tasks.length} icon="clock" />
       <Stat title="Completed" value="0" icon="check-circle" />
       <Stat title="Overdue" value="0" icon="exclamation-circle" />
-      <Stat title="Avg Progress" value="55%" icon="graph-up" />
+      <Stat title="Avg Progress" value={`${avgProgress}%`} icon="graph-up" />
     </div>
   );
 }
