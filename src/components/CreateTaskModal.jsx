@@ -14,7 +14,7 @@ export default function CreateTaskModal({ addTask }) {
       dueDate: f.date.value,
       category: f.category.value,
       priority: f.priority.value,
-      progress: Number(progress), // ✅ REAL PROGRESS
+      progress: Number(progress), 
       completed: progress === 100,
     });
 
@@ -61,7 +61,7 @@ export default function CreateTaskModal({ addTask }) {
               </div>
             </div>
 
-            {/* ✅ INITIAL PROGRESS */}
+           
             <label className="d-flex justify-content-between">
               Initial Progress
               <span>{progress}%</span>

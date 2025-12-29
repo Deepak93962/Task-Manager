@@ -24,7 +24,10 @@
    cursor: pointer;
  }
 
- 
+ .opacity-75 {
+   opacity: 0.75;
+ }
+
  .badge-category {
    background: #ede9fe;
    color: #5b21b6;

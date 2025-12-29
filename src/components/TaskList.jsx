@@ -1,7 +1,12 @@
 import TaskCard from "./TaskCard";
 
-export default function TaskList({ tasks, deleteTask, updateProgress, setEditingTask }) {
-  
+export default function TaskList({
+  tasks,
+  deleteTask,
+  updateProgress,
+  setEditingTask,
+  toggleCompleted,
+}) {
   return (
     <div>
       <input className="form-control mb-3" placeholder="Search tasks..." />
@@ -9,10 +14,10 @@ export default function TaskList({ tasks, deleteTask, updateProgress, setEditing
       {tasks.length === 0 && <p className="text-muted">No tasks yet</p>}
       {tasks.map((task) => (
         <TaskCard
-          key={task.id}
           task={task}
           deleteTask={deleteTask}
           updateProgress={updateProgress}
+          toggleCompleted={toggleCompleted}
           setEditingTask={setEditingTask}
         />
       ))}

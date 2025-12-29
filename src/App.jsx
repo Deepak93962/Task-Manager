@@ -37,6 +37,19 @@
     );
   };
 
+  const toggleCompleted = (id) => {
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === id
+          ? {
+              ...t,
+              completed: !t.completed,
+              progress: !t.completed ? 100 : t.progress,
+            }
+          : t
+      )
+    );
+  };
 
 
    return (
@@ -55,6 +68,7 @@
                tasks={tasks}
                deleteTask={deleteTask}
                updateProgress={updateProgress}
+               toggleCompleted={toggleCompleted}
                setEditingTask={setEditingTask}
              />
              {editingTask && (
