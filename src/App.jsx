@@ -1,46 +1,35 @@
- import { useState, useEffect } from "react";
- import TaskForm from "./components/TaskForm";
+ import { useState } from "react";
+ import Navbar from "./components/Navbar";
+ import Stats from "./components/Stats";
+ import Filters from "./components/Filters";
  import TaskList from "./components/TaskList";
+ import CreateTaskModal from "./components/CreateTaskModal";
 
- function App() {
+ export default function App() {
    const [tasks, setTasks] = useState([]);
 
-   // Load from localStorage
-   useEffect(() => {
-     const saved = JSON.parse(localStorage.getItem("tasks"));
-     if (saved) setTasks(saved);
-   }, []);
-
-   // Save to localStorage
-   useEffect(() => {
-     localStorage.setItem("tasks", JSON.stringify(tasks));
-   }, [tasks]);
-
-   const addTask = (text) => {
-     setTasks([...tasks, { id: Date.now(), text, completed: false }]);
-   };
-
-   const deleteTask = (id) => {
-     setTasks(tasks.filter((t) => t.id !== id));
-   };
-
-   const toggleTask = (id) => {
-     setTasks(
-       tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
-     );
+   const addTask = (task) => {
+     setTasks([...tasks, { ...task, id: Date.now() }]);
    };
 
    return (
-     <div className="container">
-       <h1>📝 Task Manager</h1>
-       <TaskForm addTask={addTask} />
-       <TaskList
-         tasks={tasks}
-         deleteTask={deleteTask}
-         toggleTask={toggleTask}
-       />
-     </div>
+     <>
+       <Navbar />
+       <div className="container mt-4">
+         <Stats tasks={tasks} />
+
+         <div className="row">
+           <div className="col-md-3 sidebar">
+             <Filters />
+           </div>
+
+           <div className="col-md-9">
+             <TaskList tasks={tasks} />
+           </div>
+         </div>
+       </div>
+
+       <CreateTaskModal addTask={addTask} />
+     </>
    );
  }
-
- export default App;

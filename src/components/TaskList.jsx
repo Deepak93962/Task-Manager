@@ -1,16 +1,15 @@
-import TaskItem from "./TaskItem";
+import TaskCard from "./TaskCard";
 
-export default function TaskList({ tasks, deleteTask, toggleTask }) {
+export default function TaskList({ tasks }) {
   return (
-    <ul>
+    <div>
+      <input className="form-control mb-3" placeholder="Search tasks..." />
+
+      {tasks.length === 0 && <p className="text-muted">No tasks yet</p>}
+
       {tasks.map((task) => (
-        <TaskItem
-          key={task.id}
-          task={task}
-          deleteTask={deleteTask}
-          toggleTask={toggleTask}
-        />
+        <TaskCard key={task.id} task={task} />
       ))}
-    </ul>
+    </div>
   );
 }
